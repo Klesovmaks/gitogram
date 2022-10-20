@@ -66,7 +66,7 @@ export default {
     placeholder,
     icon
   },
-  emits: ['onNextSlide', 'onPrevSlide', 'onProgressFinish', 'onFollow'],
+  emits: ['onNextSlide', 'onPrevSlide', 'onProgressFinish', 'onFollow', 'onUnfollow'],
   props: {
     active: Boolean,
     loading: Boolean,

@@ -1,14 +1,6 @@
 .c-placeholder{
   .placeholder {
 
-    &__top {
-      height: 136px;
-      width: 100%;
-      background: #DEDEDE;
-      border-radius: 4px;
-      margin-bottom: 22px;
-    }
-
     &__item {
       margin-bottom: 18px;
       &:last-child {
@@ -17,27 +9,26 @@
     }
     
     &__p1 {
-      height: 14px;
-      width: 70%;
-      background: #DEDEDE;
+      max-width: 504px;
+      height: 22px;
+      background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
       border-radius: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     &__p2 {
-      height: 14px;
-      width: 80%;
-      background: #DEDEDE;
+      max-width: 298px;
+      height: 22px;
+      background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
       border-radius: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     
     &__p3 {
-      height: 14px;
-      width: 60%;
-      background: #DEDEDE;
+      max-width: 216px;
+      height: 22px;
+      background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
       border-radius: 4px;
-      margin-bottom: 8px;
     }
   }
 }

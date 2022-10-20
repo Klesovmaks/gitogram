@@ -4,11 +4,12 @@
         <slot />
         <toggler class="toggler" @onToggle='toggle' />
         <div class="comments" v-if="shown">
-            <ul class="comments-list">
-                <li class="comments-item" v-for="n in 2" :key="n">
-                    <comment text="Some text" username="Jhon Doe" />
+            <ul class="comments-list" v-if="!this.loading">
+                <li class="comments-item" v-for="comment in this.comments" :key="comment.id">
+                    <comment :text="comment.title" :username="comment.user.login"/>
                 </li>
             </ul>
+            <placeholder v-else/>
         </div>
         <div class="feed-date">{{ convertedDate }}</div>
     </div>
@@ -18,13 +19,16 @@
 import { toggler } from '../toggler'
 import { comment } from '../comment'
 import { person } from '../person'
+import { placeholder } from '../placeholder'
+import axios from 'axios'
 
 export default {
   name: 'feed-item',
   components: {
     toggler,
     comment,
-    person
+    person,
+    placeholder
   },
   props: {
     username: {
@@ -38,11 +42,15 @@ export default {
     publicDate: {
       type: String,
       required: true
+    },
+    comm: {
     }
   },
   data () {
     return {
-      shown: false
+      shown: false,
+      comments: [],
+      loading: true
     }
   },
   computed: {
@@ -54,8 +62,16 @@ export default {
     }
   },
   methods: {
-    toggle (isOpened) {
+    async toggle (isOpened) {
       this.shown = isOpened
+      const { data } = await axios.get(`https://api.github.com/repos/${this.comm.owner}/${this.comm.repo}/issues`, {
+        headers: {
+          Authorization: `token ${localStorage.getItem('token')}`,
+          accept: 'application/vnd.github.v3.html+json'
+        }
+      })
+      this.comments = data
+      this.loading = false
     }
   },
   mounted () {}

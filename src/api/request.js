@@ -10,6 +10,7 @@ export const makeRequest = ({
   data,
   baseURL: withBaseURL ? baseURL : '',
   headers: {
+    Authorization: `token ${localStorage.getItem('token')}`,
     ...headers
   }
 })

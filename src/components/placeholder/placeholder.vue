@@ -1,8 +1,7 @@
 <template>
   <div class="c-placeholder">
-    <div class="placeholder__top"></div>
     <ul class="placeholder__list">
-      <li class="placeholder__item" v-for="n in paragraphs" :key="n">
+      <li class="placeholder__item" v-for="n in 2" :key="n">
         <div class="placeholder__p1"></div>
         <div class="placeholder__p2"></div>
         <div class="placeholder__p3"></div>
@@ -14,9 +13,6 @@
 <script>
 
 export default {
-  props: {
-    paragraphs: Number
-  }
 }
 </script>
 

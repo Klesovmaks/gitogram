@@ -3,11 +3,15 @@
     <topline>
       <template #headline>
         <logo/>
-        <BaseMenu/>
+        <BaseMenu
+          :source="this.user?.avatar_url"
+          @onLogout="logout"
+          @onHome="$router.push({name: 'feeds'})"
+        />
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="story in getTrendings" :key="story.id">
+          <li class="stories-item" v-for="story in getUnstarredOnly" :key="story.id">
             <story-user-item
               :avatar="story.owner.avatar_url"
               :username="story.owner.login"
@@ -21,10 +25,11 @@
   <div class="page-content">
     <ul class="feeds">
       <li class="feeds__item">
-        <feed class="feed"  v-for="item in getTrendings" :key="item.id"
+        <feed class="feed"  v-for="item in this.starred" :key="item.id"
           :username="item.owner.login"
           :avatarImgSrc="item.owner.avatar_url"
-          :publicDate="item.updated_at">
+          :publicDate="item.updated_at"
+          :comm="getRepoOwner(item)">
             <repository
               :title="item.name"
               :description="item.description"
@@ -61,18 +66,39 @@ export default {
   },
   computed: {
     ...mapState({
-      trendings: state => state.data
+      trendings: state => state.data,
+      user: state => state.user,
+      starred: state => state.likedOfMe
     }),
-    ...mapGetters(['getTrendings'])
+    ...mapGetters(['getUnstarredOnly'])
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'fetchTrendings'
-    })
+      fetchTrendings: 'fetchTrendings',
+      fetchLikedOfMe: 'fetchLikedOfMe',
+      fetchUser: 'fetchUser',
+      logout: 'logout'
+    }),
+    getReposData (repos) {
+      return {
+        title: repos.name,
+        description: repos.description,
+        username: repos.owner.login,
+        stars: repos.stargazers_count
+      }
+    },
+    getRepoOwner (repos) {
+      return {
+        repo: repos.name,
+        owner: repos.owner.login
+      }
+    }
   },
   async created () {
     try {
       await this.fetchTrendings()
+      await this.fetchUser()
+      await this.fetchLikedOfMe()
     } catch (error) {
       console.log(error)
     }

@@ -1,14 +1,15 @@
 <template>
     <div class="c-menu">
-        <router-link class="home-icon" to="/">
+        <button class="home-icon" @click="$emit('onHome')">
             <icon name="home" />
-        </router-link>
-        <router-link class="profile-icon" to="#">
-            <img src="../../img/1.png" alt="Profile" class="profile-icon__image">
-        </router-link>
-        <a class="signOut-icon" href="#">
+        </button>
+        <button class="profile-icon" @click="$emit('onUser')">
+            <img :src="source" alt="Profile" class="profile-icon__image" v-if="source" >
+            <img src="../../img/1.png" alt="Profile" class="profile-icon__image" v-else>
+        </button>
+        <button class="signOut-icon" @click="$emit('onLogout')">
             <icon name="signOut" />
-        </a>
+        </button>
 
     </div>
 </template>
@@ -18,9 +19,11 @@ import { icon } from '../../icons'
 
 export default {
   name: 'menu',
+  emits: ['onLogout', 'onUser'],
   components: {
     icon
-  }
+  },
+  props: ['source']
 }
 </script>
 
